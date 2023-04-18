@@ -1,5 +1,6 @@
 import { producer } from '@/lib/kafka/producer'
 import { Request, Response } from 'express'
+import { CompressionTypes } from 'kafkajs'
 import { randomUUID } from 'node:crypto'
 
 const topic = process.env.TOPIC
@@ -19,6 +20,7 @@ export default class UserController {
 
     await prod.send({
       topic,
+      compression: CompressionTypes.GZIP,
       messages: [
         {
           key: dataBody.id,

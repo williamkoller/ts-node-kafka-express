@@ -9,7 +9,7 @@ import { connect } from '@/lib/mongoose/mongoose-connect'
 
 const app: Application = express()
 const port = process.env.PORT
-const url = process.env.URL
+const url = process.env.APP_URL
 
 app.use(cors())
 app.disable('x-powered-by')

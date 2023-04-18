@@ -1,9 +1,8 @@
 import { kafka } from '@/lib/kafka'
+import { User } from '@/models/user/user.model'
 
 const topic = process.env.TOPIC
 const app = process.env.APP_NAME
-
-console.log({ app })
 
 export const consumer = async (): Promise<void> => {
   const consumer = kafka.consumer({ groupId: `${app}` })
@@ -13,10 +12,15 @@ export const consumer = async (): Promise<void> => {
 
   await consumer.run({
     eachMessage: async ({ topic, message, partition }) => {
+      const user = JSON.parse(message.value?.toString())
+      const userDb = await User.create(user)
+
+      await userDb.save()
+
       console.log({
         topic,
         partition,
-        value: JSON.parse(message.value?.toString()),
+        value: user,
         offset: Number(message.offset),
       })
     },
