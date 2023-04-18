@@ -34,3 +34,7 @@ esbuild     1.45 seconds    248692 lines per second
 TypeScript  8.98 seconds    40240 lines per second
 Babel       9.18 seconds    39366 lines per second
 ```
+
+- Example Consumer:
+
+<img src="./imgs/terminal-consumer.png" />

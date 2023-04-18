@@ -4,6 +4,7 @@ import Logger from '@/lib/log/logger'
 import morganMiddleware from '@/lib/morgan/morgan-middleware'
 import { router } from '@/routes/routes'
 import cors from 'cors'
+import { consumer } from './lib/kafka/consumer'
 
 const app: Application = express()
 const port = process.env.PORT
@@ -14,6 +15,8 @@ app.disable('x-powered-by')
 app.use(express.json())
 app.use(morganMiddleware)
 app.use(router)
+
+consumer().catch(Logger.error)
 
 app.listen(port, () =>
   Logger.debug(`Server is up and running @ ${url}:${port}`)
