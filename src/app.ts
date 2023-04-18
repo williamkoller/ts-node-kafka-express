@@ -5,6 +5,7 @@ import morganMiddleware from '@/lib/morgan/morgan-middleware'
 import { router } from '@/routes/routes'
 import cors from 'cors'
 import { consumer } from './lib/kafka/consumer'
+import { connect } from '@/lib/mongoose/mongoose-connect'
 
 const app: Application = express()
 const port = process.env.PORT
@@ -15,6 +16,10 @@ app.disable('x-powered-by')
 app.use(express.json())
 app.use(morganMiddleware)
 app.use(router)
+
+connect()
+  .then(() => Logger.info('Database connected'))
+  .catch(Logger.error)
 
 consumer().catch(Logger.error)
 

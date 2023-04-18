@@ -25,3 +25,14 @@ services:
       - '2181:2181'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - ${MONGODB_PORT}:${MONGODB_PORT}
+    volumes:
+      - /mongodb-volume:/data/db
+
+volumes:
+  mongodb-volume:
